@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL.h> // Main SDL
+#include <SDL_image.h>
 #include <glm/glm.hpp>
+
 #include "Game.h"
 
 Game::Game() {
@@ -76,6 +78,14 @@ void Game::Setup() {
 }
 
 void Game::Update() {
+	// TODO: if we are too fast, waste some time until we reach the MILLLISECS_PER_FRAME
+	// is there room for improvement on this to not waste any time? server side updates faster perhaps?
+	// What is a macro? v
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), millisecsPreviousFrame + MILLISECS_PER_FRAME));
+
+	// Store current frame time
+	millisecsPreviousFrame = SDL_GetTicks();
+
 	// Update game objects, etc...
 	playerPosition.x += playerVelocity.x;
 	playerPosition.y += playerVelocity.y;

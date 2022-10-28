@@ -2,18 +2,18 @@
 #define GAME_H
 
 #include <SDL.h>
-#include <SDL_image.h>
+
+const int FPS = 30;
+const int MILLISECS_PER_FRAME = 1000 / FPS;
 
 class Game {
 	private:
 		bool isRunning;
-		// Why are these private?
-		// They have access to member variables below
+		int millisecsPreviousFrame = 0;
 		SDL_Window* window;
 		SDL_Renderer* renderer;
 
-	public: 
-		// Public API
+	public:
 		Game();
 		~Game();
 
