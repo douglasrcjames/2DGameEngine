@@ -4,26 +4,27 @@
 #include <glm/glm.hpp>
 
 #include "Game.h"
+#include "Logger.h"
 
 Game::Game() {
 	isRunning = false;
-	std::cout << "Game constructor called!" << std::endl;
+	Logger::Log("Game constructor called!");
 }
 
 Game::~Game() {
-	std::cout << "Game destructor called!" << std::endl;
+	Logger::Log("Game destructor called!");
 }
 
 void Game::Initialize() {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-		std::cerr << "SDL failed to init!" << std::endl;
+		Logger::Err("SDL failed to init!");
 		return;
 	}
 
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
-	windowWidth = 800; // displayMode.w;
-	windowHeight = 600; // displayMode.h;
+	windowWidth = 1600; // displayMode.w;
+	windowHeight = 1200; // displayMode.h;
 
 	window = SDL_CreateWindow(
 		"2D Game Engine",
@@ -34,17 +35,17 @@ void Game::Initialize() {
 		SDL_WINDOW_BORDERLESS
 	);
 	if (!window) {
-		std::cerr << "Error creating SDL window." << std::endl;
+		Logger::Err("Error creating SDL window.");
 		return;
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	if (!renderer) {
-		std::cerr << "Error creating DL renderer." << std::endl;
+		Logger::Err("Error creating DL renderer.");
 		return;
 	}
 
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // actually changes mode to full screen!
+	// off for now so its faster to boot! SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // actually changes mode to full screen!
 
 	isRunning = true;
 }
@@ -74,21 +75,33 @@ glm::vec2 playerVelocity;
 void Game::Setup() {
 	// Initialize game objects....
 	playerPosition = glm::vec2(10.0, 20.0);
-	playerVelocity = glm::vec2(1.0, 0.0);
+	playerVelocity = glm::vec2(100.0, 5.0);
 }
 
 void Game::Update() {
-	// TODO: if we are too fast, waste some time until we reach the MILLLISECS_PER_FRAME
-	// is there room for improvement on this to not waste any time? server side updates faster perhaps?
-	// What is a macro? v
-	while (!SDL_TICKS_PASSED(SDL_GetTicks(), millisecsPreviousFrame + MILLISECS_PER_FRAME));
+	// If we are too fast, waste some time until we reach the MILLLISECS_PER_FRAME
+	bool cappedFramerate = true;
+	if (cappedFramerate) {
+		int timeToWait = MILLISECS_PER_FRAME - (SDL_GetTicks() - millisecsPreviousFrame);
+		if (timeToWait > 0 && timeToWait <= MILLISECS_PER_FRAME) {
+			SDL_Delay(timeToWait);
+		}
+	}
 
-	// Store current frame time
+	int timeToWait = MILLISECS_PER_FRAME - (SDL_GetTicks() - millisecsPreviousFrame);
+	if (timeToWait > 0 && timeToWait <= MILLISECS_PER_FRAME) {
+		SDL_Delay(timeToWait);
+	}
+
+	// The difference in ticks since the last frame, converted to seconds
+	double deltaTime = (SDL_GetTicks() - millisecsPreviousFrame) / 1000.0;
+
+	// Store the "previous" frame time
 	millisecsPreviousFrame = SDL_GetTicks();
 
 	// Update game objects, etc...
-	playerPosition.x += playerVelocity.x;
-	playerPosition.y += playerVelocity.y;
+	playerPosition.x += playerVelocity.x * deltaTime;
+	playerPosition.y += playerVelocity.y * deltaTime;
 }
 
 void Game::Render() {
