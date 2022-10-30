@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 const int FPS = 144;
 const int MILLISECS_PER_FRAME = 1000 / FPS;

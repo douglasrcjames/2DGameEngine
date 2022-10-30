@@ -1,6 +1,6 @@
 #include <iostream>
-#include <SDL.h> // Main SDL
-#include <SDL_image.h>
+#include <SDL2/SDL.h> // Main SDL
+#include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>
 
 #include "Game.h"
@@ -23,8 +23,8 @@ void Game::Initialize() {
 
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
-	windowWidth = 1600; // displayMode.w;
-	windowHeight = 1200; // displayMode.h;
+	windowWidth = 800; // displayMode.w;
+	windowHeight = 600; // displayMode.h;
 
 	window = SDL_CreateWindow(
 		"2D Game Engine",
