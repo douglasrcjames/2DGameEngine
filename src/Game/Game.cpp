@@ -1,6 +1,22 @@
 #include <iostream>
-#include <SDL2/SDL.h> // Main SDL
-#include <SDL2/SDL_image.h>
+#if defined __has_include
+#  if __has_include (<SDL2/SDL.h>)
+#     include <SDL2/SDL.h>
+#  endif
+#  if __has_include (<SDL.h>)
+#     include <SDL.h>
+#  endif
+#endif
+
+#if defined __has_include
+#  if __has_include (<SDL2/SDL_image.h>)
+#     include <SDL2/SDL_image.h>
+#  endif
+#  if __has_include (<SDL.h>)
+#     include <SDL_image.h>
+#  endif
+#endif
+
 #include <glm/glm.hpp>
 
 #include "Game.h"
@@ -66,7 +82,7 @@ void Game::ProcessInput() {
 				}
 				break;
 		}
-	}; 
+	};
 }
 
 glm::vec2 playerPosition;

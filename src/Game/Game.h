@@ -1,7 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SDL2/SDL.h>
+#if defined __has_include
+#  if __has_include (<SDL2/SDL.h>)
+#     include <SDL2/SDL.h>
+#  endif
+#  if __has_include (<SDL.h>)
+#     include <SDL.h>
+#  endif
+#endif
 
 const int FPS = 144;
 const int MILLISECS_PER_FRAME = 1000 / FPS;
