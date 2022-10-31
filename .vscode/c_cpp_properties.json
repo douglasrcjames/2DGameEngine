@@ -3,7 +3,7 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**",
+                "${workspaceFolder}/libs",
                 "/opt/homebrew/lib",
                 "/opt/homebrew/include",
                 "/usr/local/include"
@@ -15,8 +15,11 @@
             "compilerPath": "/usr/bin/g++",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "macos-clang-arm64",
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "intelliSenseMode": "${default}",
+            "configurationProvider": "ms-vscode.cpptools",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false
+            }
         }
     ],
     "version": 4
