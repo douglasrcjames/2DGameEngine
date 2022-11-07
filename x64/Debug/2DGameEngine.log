@@ -1,14 +1,4 @@
-﻿  Game.cpp
-C:\Users\dougl\source\repos\2DGameEngine\2DGameEngine\src\Game\Game.cpp(119,39): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\dougl\source\repos\2DGameEngine\2DGameEngine\src\Game\Game.cpp(120,39): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-  Main.cpp
+﻿  ECS.cpp
+  Game.cpp
   Generating Code...
   2DGameEngine.vcxproj -> C:\Users\dougl\source\repos\2DGameEngine\x64\Debug\2DGameEngine.exe
